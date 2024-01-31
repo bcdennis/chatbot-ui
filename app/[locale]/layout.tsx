@@ -9,6 +9,8 @@ import { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
+// Supports weights 100-900
+
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })

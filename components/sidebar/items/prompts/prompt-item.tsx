@@ -24,7 +24,7 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
       updateState={{ name, content }}
       renderInputs={() => (
         <>
-          <div className="space-y-1">
+          <div className="space-y-1 text-xl">
             <Label>Name</Label>
 
             <Input
@@ -37,15 +37,15 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
             />
           </div>
 
-          <div className="space-y-1">
-            <Label>Prompt</Label>
+          <div className="space-y-1 text-xl">
+            <Label>Prompt </Label>
 
             <TextareaAutosize
               placeholder="Prompt..."
               value={content}
               onValueChange={setContent}
               minRows={6}
-              maxRows={20}
+              maxRows={30}
               onCompositionStart={() => setIsTyping(true)}
               onCompositionEnd={() => setIsTyping(false)}
             />

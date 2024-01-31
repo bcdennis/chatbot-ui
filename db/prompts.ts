@@ -1,6 +1,20 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 
+export const getPromptByName = async (name: string) => {
+  const { data: prompt, error } = await supabase
+    .from("prompts")
+    .select("*")
+    .eq("name", name)
+    .single()
+
+  if (!prompt) {
+    throw new Error(error.message)
+  }
+
+  return prompt
+}
+
 export const getPromptById = async (promptId: string) => {
   const { data: prompt, error } = await supabase
     .from("prompts")

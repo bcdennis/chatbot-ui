@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog"
 import { Label } from "../ui/label"
 import { TextareaAutosize } from "../ui/textarea-autosize"
 import { usePromptAndCommand } from "./chat-hooks/use-prompt-and-command"
+import { getPromptByName } from "@/db/prompts"
 
 interface PromptPickerProps {}
 
@@ -47,22 +48,40 @@ export const PromptPicker: FC<PromptPickerProps> = ({}) => {
     setIsPromptPickerOpen(isOpen)
   }
 
-  const callSelectPrompt = (prompt: Tables<"prompts">) => {
+  const callSelectPrompt = async (prompt: Tables<"prompts">) => {
+    const atRegex = /@\w{1,15}/g
+    const atMatches = prompt.content.match(atRegex)
     const regex = /\{\{.*?\}\}/g
     const matches = prompt.content.match(regex)
+    let updatedContent = prompt.content
 
-    if (matches) {
-      const newPromptVariables = matches.map(match => ({
-        promptId: prompt.id,
-        name: match.replace(/\{\{|\}\}/g, ""),
-        value: ""
-      }))
+    if (atMatches) {
+      for (const match of atMatches) {
+        const placeholder = match.replace("@", "")
+        const macro = await getPromptByName(placeholder)
+        updatedContent = updatedContent.replace(match, macro.content)
+      }
 
-      setPromptVariables(newPromptVariables)
-      setShowPromptVariables(true)
-    } else {
-      handleSelectPrompt(prompt)
+      const newPrompt: any = {
+        ...prompt,
+        content: updatedContent
+      }
+      handleSelectPrompt(newPrompt)
       handleOpenChange(false)
+    } else {
+      if (matches) {
+        const newPromptVariables = matches.map(match => ({
+          promptId: prompt.id,
+          name: match.replace(/\{\{|\}\}/g, ""),
+          value: ""
+        }))
+
+        setPromptVariables(newPromptVariables)
+        setShowPromptVariables(true)
+      } else {
+        handleSelectPrompt(prompt)
+        handleOpenChange(false)
+      }
     }
   }
 
