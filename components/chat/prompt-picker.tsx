@@ -49,7 +49,7 @@ export const PromptPicker: FC<PromptPickerProps> = ({}) => {
   }
 
   const callSelectPrompt = async (prompt: Tables<"prompts">) => {
-    const atRegex = /@\w{1,15}/g
+    const atRegex = /@[\w_-]{1,30}/g
     const atMatches = prompt.content.match(atRegex)
     const regex = /\{\{.*?\}\}/g
     const matches = prompt.content.match(regex)
