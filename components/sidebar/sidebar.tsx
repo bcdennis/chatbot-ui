@@ -28,7 +28,9 @@ export const Sidebar: FC<SidebarProps> = ({ contentType, showSidebar }) => {
 
   const chatFolders = folders.filter(folder => folder.type === "chats")
   const presetFolders = folders.filter(folder => folder.type === "presets")
-  const promptFolders = folders.filter(folder => folder.type === "prompts")
+  const promptFolders = folders
+    .filter(folder => folder.type === "prompts")
+    .sort((a, b) => (a.name < b.name ? 1 : -1))
   const filesFolders = folders.filter(folder => folder.type === "files")
   const collectionFolders = folders.filter(
     folder => folder.type === "collections"
