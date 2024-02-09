@@ -347,7 +347,7 @@ export const handleCreateChat = async (
   let chatName = messageContent.substring(0, 70)
 
   if (matches) {
-    chatName = matches[1].trim()
+    chatName = matches[0].replace(/^\/\* */, "").replace(/ \*\/$/, "")
   }
 
   const chatPayload = {
