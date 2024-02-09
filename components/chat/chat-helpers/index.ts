@@ -342,7 +342,15 @@ export const handleCreateChat = async (
   setChats: React.Dispatch<React.SetStateAction<Tables<"chats">[]>>,
   setChatFiles: React.Dispatch<React.SetStateAction<ChatFile[]>>
 ) => {
-  const createdChat = await createChat({
+  const regex = /\/\*.*?\*\//g
+  const matches = messageContent.match(regex)
+  let chatName = messageContent.substring(0, 70)
+
+  if (matches) {
+    chatName = matches[0]
+  }
+
+  const chatPayload = {
     user_id: profile.user_id,
     workspace_id: selectedWorkspace.id,
     assistant_id: selectedAssistant?.id || null,
@@ -350,11 +358,12 @@ export const handleCreateChat = async (
     include_profile_context: chatSettings.includeProfileContext,
     include_workspace_instructions: chatSettings.includeWorkspaceInstructions,
     model: chatSettings.model,
-    name: messageContent.substring(0, 100),
+    name: chatName,
     prompt: chatSettings.prompt,
     temperature: chatSettings.temperature,
     embeddings_provider: chatSettings.embeddingsProvider
-  })
+  }
+  const createdChat = await createChat(chatPayload)
 
   setSelectedChat(createdChat)
   setChats(chats => [createdChat, ...chats])
