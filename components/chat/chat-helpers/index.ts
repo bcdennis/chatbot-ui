@@ -409,8 +409,11 @@ export const handleCreateMessages = async (
 
   const regex = /%([^%]+)%\s*```([\s\S]+?)```/
   const match = generatedText.match(regex)
+
   if (match) {
+    console.log("Match 1\n")
     console.log(match[1])
+    console.log("\nMatch 2\n")
     console.log(match[2])
   }
 
