@@ -68,19 +68,20 @@ export const PromptPicker: FC<PromptPickerProps> = ({}) => {
       }
       handleSelectPrompt(newPrompt)
       handleOpenChange(false)
-    }
-    if (matches) {
-      const newPromptVariables = matches.map(match => ({
-        promptId: prompt.id,
-        name: match.replace(/\{\{|\}\}/g, ""),
-        value: ""
-      }))
-
-      setPromptVariables(newPromptVariables)
-      setShowPromptVariables(true)
     } else {
-      handleSelectPrompt(prompt)
-      handleOpenChange(false)
+      if (matches) {
+        const newPromptVariables = matches.map(match => ({
+          promptId: prompt.id,
+          name: match.replace(/\{\{|\}\}/g, ""),
+          value: ""
+        }))
+
+        setPromptVariables(newPromptVariables)
+        setShowPromptVariables(true)
+      } else {
+        handleSelectPrompt(prompt)
+        handleOpenChange(false)
+      }
     }
   }
 
