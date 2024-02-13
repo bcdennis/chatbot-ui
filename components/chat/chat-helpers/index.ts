@@ -407,7 +407,7 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
-  const regex = /%([^%]+)%\s*```([\s\S]+?)```/
+  const regex = /%%([^%]+)%%\s*```([\s\S]+?)```/
   const match = generatedText.match(regex)
 
   if (match) {
