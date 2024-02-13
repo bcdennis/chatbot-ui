@@ -407,6 +407,8 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
+  console.log(generatedText)
+
   const finalAssistantMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
     user_id: profile.user_id,
