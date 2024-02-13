@@ -407,7 +407,12 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
-  console.log(generatedText)
+  const regex = /%([^%]+)%\s*```([\s\S]+?)```/
+  const match = generatedText.match(regex)
+  if (match) {
+    console.log(match[1])
+    console.log(match[2])
+  }
 
   const finalAssistantMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
