@@ -1,5 +1,6 @@
 // Only used in use-chat-handler.tsx to keep it clean
 
+import { ChatbotUIContext } from "@/context/context"
 import { createChatFiles } from "@/db/chat-files"
 import { createChat } from "@/db/chats"
 import { createMessageFileItems } from "@/db/message-file-items"
@@ -20,7 +21,7 @@ import {
   LLM,
   MessageImage
 } from "@/types"
-import React from "react"
+import React, { SetStateAction, useContext, useState } from "react"
 import { toast } from "sonner"
 import { v4 as uuidv4 } from "uuid"
 
@@ -382,7 +383,7 @@ export const handleCreateChat = async (
   return createdChat
 }
 
-export const handleCreateMessages = async (
+export async function handleCreateMessages(
   chatMessages: ChatMessage[],
   currentChat: Tables<"chats">,
   profile: Tables<"profiles">,
@@ -397,7 +398,7 @@ export const handleCreateMessages = async (
     React.SetStateAction<Tables<"file_items">[]>
   >,
   setChatImages: React.Dispatch<React.SetStateAction<MessageImage[]>>
-) => {
+) {
   const finalUserMessage: TablesInsert<"messages"> = {
     chat_id: currentChat.id,
     user_id: profile.user_id,
@@ -416,6 +417,7 @@ export const handleCreateMessages = async (
     const promptContent = match[2].trim()
     const prompt = await getPromptByName(promptName)
     prompt.content = promptContent
+
     updatePrompt(prompt.id, prompt)
   }
 

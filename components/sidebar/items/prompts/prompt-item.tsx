@@ -6,6 +6,7 @@ import { Tables } from "@/supabase/types"
 import { IconPencil } from "@tabler/icons-react"
 import { FC, useState } from "react"
 import { SidebarItem } from "../all/sidebar-display-item"
+import { getPromptByName } from "@/db/prompts"
 
 interface PromptItemProps {
   prompt: Tables<"prompts">
@@ -15,6 +16,7 @@ export const PromptItem: FC<PromptItemProps> = ({ prompt }) => {
   const [name, setName] = useState(prompt.name)
   const [content, setContent] = useState(prompt.content)
   const [isTyping, setIsTyping] = useState(false)
+
   return (
     <SidebarItem
       item={prompt}
