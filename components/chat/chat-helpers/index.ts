@@ -408,16 +408,15 @@ export const handleCreateMessages = async (
     image_paths: []
   }
 
-  const regex = /%([^%]+)%\s*```([\s\S]+?)```/
-  const match = generatedText.match(regex)
+  const regex = /%([^%]+)%\s*```([\s\S]+?)```/g
+  let match
 
-  if (match) {
-    const promptName = match[1]
-    const promptContent = match[2]
+  while ((match = regex.exec(generatedText)) !== null) {
+    const promptName = match[1].trim()
+    const promptContent = match[2].trim()
     const prompt = await getPromptByName(promptName)
     prompt.content = promptContent
-
-    const result = await updatePrompt(prompt.id, prompt)
+    updatePrompt(prompt.id, prompt)
   }
 
   const finalAssistantMessage: TablesInsert<"messages"> = {
