@@ -417,7 +417,7 @@ export const handleCreateMessages = async (
     const prompt = await getPromptByName(promptName)
     prompt.content = promptContent
 
-    await updatePrompt(prompt.id, prompt)
+    const result = await updatePrompt(prompt.id, prompt)
   }
 
   const finalAssistantMessage: TablesInsert<"messages"> = {
