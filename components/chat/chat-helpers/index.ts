@@ -4,6 +4,7 @@ import { createChatFiles } from "@/db/chat-files"
 import { createChat } from "@/db/chats"
 import { createMessageFileItems } from "@/db/message-file-items"
 import { createMessages, updateMessage } from "@/db/messages"
+import { getPromptByName, updatePrompt } from "@/db/prompts"
 import { uploadMessageImage } from "@/db/storage/message-images"
 import {
   buildFinalMessages,
@@ -411,10 +412,12 @@ export const handleCreateMessages = async (
   const match = generatedText.match(regex)
 
   if (match) {
-    console.log("Match 1\n")
-    console.log(match[1])
-    console.log("\nMatch 2\n")
-    console.log(match[2])
+    const promptName = match[1]
+    const promptContent = match[2]
+    const prompt = await getPromptByName(promptName)
+    prompt.content = promptContent
+
+    await updatePrompt(prompt.id, prompt)
   }
 
   const finalAssistantMessage: TablesInsert<"messages"> = {
