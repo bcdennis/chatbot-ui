@@ -256,8 +256,10 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                     >
                       <WithTooltip
                         delayDuration={200}
-                        side="bottom"
-                        display={<div>{item.name}</div>}
+                        side="right"
+                        display={
+                          <div className="p2 bg-secondary">{item.name}</div>
+                        }
                         trigger={getDataListComponent(contentType, item)}
                       />
                     </div>
@@ -303,7 +305,16 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                                 draggable
                                 onDragStart={e => handleDragStart(e, item.id)}
                               >
-                                {getDataListComponent(contentType, item)}
+                                {" "}
+                                <WithTooltip
+                                  delayDuration={200}
+                                  side="right"
+                                  display={<div>{item.name}</div>}
+                                  trigger={getDataListComponent(
+                                    contentType,
+                                    item
+                                  )}
+                                />
                               </div>
                             ))}
                           </div>
