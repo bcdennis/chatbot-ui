@@ -3,6 +3,7 @@ import { TablesInsert, TablesUpdate } from "@/supabase/types"
 import { toast } from "sonner"
 
 const toastOptions = {
+  unstyled: true,
   className:
     "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
   duration: 5000
@@ -17,7 +18,7 @@ export const getPromptByName = async (name: string) => {
 
   if (error) {
     if (error.details === "The result contains 0 rows") {
-      toast(`Prompt with name '${name}' not found.`, toastOptions)
+      toast(`Macro with name '${name}' not found.`, toastOptions)
     } else if (error.details.includes("The result contains")) {
       const regex = /(\d*[1-9]\d*) rows/
       const match = error.details.match(regex)
