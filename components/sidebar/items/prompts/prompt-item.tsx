@@ -6,7 +6,6 @@ import { Tables } from "@/supabase/types"
 import { IconPencil } from "@tabler/icons-react"
 import { FC, useState } from "react"
 import { SidebarItem } from "../all/sidebar-display-item"
-import { getPromptByName } from "@/db/prompts"
 
 interface PromptItemProps {
   prompt: Tables<"prompts">

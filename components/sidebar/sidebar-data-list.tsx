@@ -21,6 +21,7 @@ import { ModelItem } from "./items/models/model-item"
 import { PresetItem } from "./items/presets/preset-item"
 import { PromptItem } from "./items/prompts/prompt-item"
 import { ToolItem } from "./items/tools/tool-item"
+import { WithTooltip } from "@/components/ui/with-tooltip"
 
 interface SidebarDataListProps {
   contentType: ContentType
@@ -61,7 +62,15 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
         return <PresetItem key={item.id} preset={item as Tables<"presets">} />
 
       case "prompts":
-        return <PromptItem key={item.id} prompt={item as Tables<"prompts">} />
+        return (
+          <WithTooltip
+            delayDuration={200}
+            display={<div>{item.name}</div>}
+            trigger={
+              <PromptItem key={item.id} prompt={item as Tables<"prompts">} />
+            }
+          />
+        )
 
       case "files":
         return <FileItem key={item.id} file={item as Tables<"files">} />
@@ -221,7 +230,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     <>
       <div
         ref={divRef}
-        className="mt-2 flex flex-col overflow-auto"
+        className="mt-2 flex min-w-[1024px] overflow-auto"
         onDrop={handleDrop}
       >
         {data.length === 0 && (
