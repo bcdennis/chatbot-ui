@@ -9,6 +9,7 @@ export const getPromptByName = async (name: string) => {
     .single()
 
   if (!prompt) {
+    console.log(error)
     throw new Error(error.message)
   }
 
