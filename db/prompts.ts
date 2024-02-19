@@ -2,18 +2,27 @@ import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 
 export const getPromptByName = async (name: string) => {
-  const { data: prompt, error } = await supabase
-    .from("prompts")
-    .select("*")
-    .eq("name", name)
-    .single()
+  try {
+    const { data: prompt, error } = await supabase
+      .from("prompts")
+      .select("*")
+      .eq("name", name)
+      .single()
 
-  if (!prompt) {
-    console.log(error)
-    throw new Error(error.message)
+    if (error) {
+      console.log(prompt)
+      throw new Error(`Supabase Error: ${error.message}`)
+    }
+
+    if (!prompt) {
+      throw new Error(`Prompt with name '${name}' not found.`)
+    }
+
+    return prompt
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to fetch prompt. Please try again later.")
   }
-
-  return prompt
 }
 
 export const getPromptById = async (promptId: string) => {
