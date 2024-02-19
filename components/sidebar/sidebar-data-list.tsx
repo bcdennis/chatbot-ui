@@ -258,7 +258,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                         delayDuration={200}
                         side="top"
                         display={
-                          <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-sm shadow-md">
+                          <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-lg">
                             {item.name}
                           </div>
                         }
@@ -312,7 +312,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                                   delayDuration={200}
                                   side="top"
                                   display={
-                                    <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-sm shadow-md">
+                                    <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-lg">
                                       {item.name}
                                     </div>
                                   }
