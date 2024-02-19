@@ -1,28 +1,23 @@
 import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
+import { toast } from "sonner"
 
 export const getPromptByName = async (name: string) => {
-  try {
-    const { data: prompt, error } = await supabase
-      .from("prompts")
-      .select("*")
-      .eq("name", name)
-      .single()
+  const { data: prompt, error } = await supabase
+    .from("prompts")
+    .select("*")
+    .eq("name", name)
+    .single()
 
-    if (error) {
-      console.log(prompt)
-      throw new Error(`Supabase Error: ${error.message}`)
-    }
+  if (error) {
+    console.log(error)
 
-    if (!prompt) {
-      throw new Error(`Prompt with name '${name}' not found.`)
-    }
+    toast.error(`'${error.details}' occurred when retrieving macro '${name}'.`)
 
-    return prompt
-  } catch (error) {
-    console.error(error)
-    throw new Error("Failed to fetch prompt. Please try again later.")
+    throw new Error(`Supabase Error: ${error.message}`)
   }
+
+  return prompt
 }
 
 export const getPromptById = async (promptId: string) => {
