@@ -62,15 +62,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
         return <PresetItem key={item.id} preset={item as Tables<"presets">} />
 
       case "prompts":
-        return (
-          <WithTooltip
-            delayDuration={200}
-            display={<div>{item.name}</div>}
-            trigger={
-              <PromptItem key={item.id} prompt={item as Tables<"prompts">} />
-            }
-          />
-        )
+        return <PromptItem key={item.id} prompt={item as Tables<"prompts">} />
 
       case "files":
         return <FileItem key={item.id} file={item as Tables<"files">} />
