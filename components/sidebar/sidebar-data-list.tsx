@@ -230,7 +230,7 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
     <>
       <div
         ref={divRef}
-        className="mt-2 flex min-w-[1024px] overflow-auto"
+        className="mt-2 flex flex-col overflow-auto"
         onDrop={handleDrop}
       >
         {data.length === 0 && (
@@ -262,7 +262,12 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                       draggable
                       onDragStart={e => handleDragStart(e, item.id)}
                     >
-                      {getDataListComponent(contentType, item)}
+                      <WithTooltip
+                        delayDuration={200}
+                        side="bottom"
+                        display={<div>{item.name}</div>}
+                        trigger={getDataListComponent(contentType, item)}
+                      />
                     </div>
                   ))}
               </Folder>
