@@ -31,7 +31,7 @@ export const getPromptByName = async (name: string) => {
 
       if (match) {
         const rowCount = match[1]
-        toast.error(
+        toast(
           `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`,
           {
             unstyled: true,
@@ -44,7 +44,7 @@ export const getPromptByName = async (name: string) => {
 
         console.error("Data Inconsistency Error:", error)
       } else {
-        toast.error(
+        toast(
           `Unexpected Error: '${error.details}' found with loading macro '${name}'.`,
           {
             unstyled: true,
@@ -57,11 +57,10 @@ export const getPromptByName = async (name: string) => {
         )
       }
     } else {
-      toast.error(
+      toast(
         "An error occurred while fetching the prompt. Please try again later or contact support.",
         {
           unstyled: true,
-
           className:
             "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
           closeButton: true,
