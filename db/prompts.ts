@@ -2,6 +2,13 @@ import { supabase } from "@/lib/supabase/browser-client"
 import { TablesInsert, TablesUpdate } from "@/supabase/types"
 import { toast } from "sonner"
 
+const toastOptions = {
+  className:
+    "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+  closeButton: true,
+  duration: null
+}
+
 export const getPromptByName = async (name: string) => {
   const { data: prompt, error } = await supabase
     .from("prompts")
@@ -11,7 +18,12 @@ export const getPromptByName = async (name: string) => {
 
   if (error) {
     if (error.details === "The result contains 0 rows") {
-      toast.error(`Prompt with name '${name}' not found.`)
+      toast(`Prompt with name '${name}' not found.`, {
+        className:
+          "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+        closeButton: true,
+        duration: undefined
+      })
     } else if (error.details.includes("The result contains")) {
       const regex = /(\d*[1-9]\d*) rows/
       const match = error.details.match(regex)
@@ -19,18 +31,36 @@ export const getPromptByName = async (name: string) => {
       if (match) {
         const rowCount = match[1]
         toast.error(
-          `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`
+          `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`,
+          {
+            className:
+              "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            closeButton: true,
+            duration: undefined
+          }
         )
 
         console.error("Data Inconsistency Error:", error)
       } else {
         toast.error(
-          `Unexpected Error: '${error.details}' found with loading macro '${name}'.`
+          `Unexpected Error: '${error.details}' found with loading macro '${name}'.`,
+          {
+            className:
+              "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            closeButton: true,
+            duration: undefined
+          }
         )
       }
     } else {
       toast.error(
-        "An error occurred while fetching the prompt. Please try again later or contact support."
+        "An error occurred while fetching the prompt. Please try again later or contact support.",
+        {
+          className:
+            "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+          closeButton: true,
+          duration: undefined
+        }
       )
       console.error("Supabase Error:", error)
     }
