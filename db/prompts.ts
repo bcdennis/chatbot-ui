@@ -5,8 +5,7 @@ import { toast } from "sonner"
 const toastOptions = {
   className:
     "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-  closeButton: true,
-  duration: null
+  duration: 5000
 }
 
 export const getPromptByName = async (name: string) => {
@@ -18,13 +17,7 @@ export const getPromptByName = async (name: string) => {
 
   if (error) {
     if (error.details === "The result contains 0 rows") {
-      toast(`Prompt with name '${name}' not found.`, {
-        unstyled: true,
-        className:
-          "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-        closeButton: true,
-        duration: undefined
-      })
+      toast(`Prompt with name '${name}' not found.`, toastOptions)
     } else if (error.details.includes("The result contains")) {
       const regex = /(\d*[1-9]\d*) rows/
       const match = error.details.match(regex)
@@ -33,39 +26,20 @@ export const getPromptByName = async (name: string) => {
         const rowCount = match[1]
         toast(
           `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`,
-          {
-            unstyled: true,
-            className:
-              "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-            closeButton: true,
-            duration: undefined
-          }
+          toastOptions
         )
 
         console.error("Data Inconsistency Error:", error)
       } else {
         toast(
           `Unexpected Error: '${error.details}' found with loading macro '${name}'.`,
-          {
-            unstyled: true,
-
-            className:
-              "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-            closeButton: true,
-            duration: undefined
-          }
+          toastOptions
         )
       }
     } else {
       toast(
         "An error occurred while fetching the prompt. Please try again later or contact support.",
-        {
-          unstyled: true,
-          className:
-            "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-          closeButton: true,
-          duration: undefined
-        }
+        toastOptions
       )
       console.error("Supabase Error:", error)
     }
