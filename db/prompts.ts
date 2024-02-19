@@ -4,8 +4,7 @@ import { toast } from "sonner"
 
 const toastOptions = {
   unstyled: true,
-  className:
-    "bg-red-500 text-white font-medium text-lg p-5 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+  className: "bg-danger text-white font-medium text-lg p-5 rounded-lg",
   duration: 5000
 }
 
@@ -18,27 +17,27 @@ export const getPromptByName = async (name: string) => {
 
   if (error) {
     if (error.details === "The result contains 0 rows") {
-      toast(`Macro with name '${name}' not found.`, toastOptions)
+      toast.error(`Macro with name '${name}' not found.`, toastOptions)
     } else if (error.details.includes("The result contains")) {
       const regex = /(\d*[1-9]\d*) rows/
       const match = error.details.match(regex)
 
       if (match) {
         const rowCount = match[1]
-        toast(
+        toast.error(
           `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`,
           toastOptions
         )
 
         console.error("Data Inconsistency Error:", error)
       } else {
-        toast(
+        toast.error(
           `Unexpected Error: '${error.details}' found with loading macro '${name}'.`,
           toastOptions
         )
       }
     } else {
-      toast(
+      toast.error(
         "An error occurred while fetching the prompt. Please try again later or contact support.",
         toastOptions
       )
