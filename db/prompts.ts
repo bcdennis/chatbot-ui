@@ -10,11 +10,32 @@ export const getPromptByName = async (name: string) => {
     .single()
 
   if (error) {
-    console.log(error)
+    if (error.details === "The result contains 0 rows") {
+      toast.error(`Prompt with name '${name}' not found.`)
+    } else if (error.details.includes("The result contains")) {
+      const regex = /(\d*[1-9]\d*) rows/
+      const match = error.details.match(regex)
 
-    toast.error(`'${error.details}' occurred when retrieving macro '${name}'.`)
+      if (match) {
+        const rowCount = match[1]
+        toast.error(
+          `Unexpected Error: Multiple macros (${rowCount}) found with name '${name}'. This indicates a data consistency issue.`
+        )
 
-    throw new Error(`Supabase Error: ${error.message}`)
+        console.error("Data Inconsistency Error:", error)
+      } else {
+        toast.error(
+          `Unexpected Error: '${error.details}' found with loading macro '${name}'.`
+        )
+      }
+    } else {
+      toast.error(
+        "An error occurred while fetching the prompt. Please try again later or contact support."
+      )
+      console.error("Supabase Error:", error)
+    }
+
+    throw error // Re-throw for further handling if needed
   }
 
   return prompt
