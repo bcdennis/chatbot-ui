@@ -256,9 +256,11 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                     >
                       <WithTooltip
                         delayDuration={200}
-                        side="right"
+                        side="top"
                         display={
-                          <div className="p2 bg-secondary">{item.name}</div>
+                          <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-sm shadow-md">
+                            {item.name}
+                          </div>
                         }
                         trigger={getDataListComponent(contentType, item)}
                       />
@@ -308,8 +310,12 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                                 {" "}
                                 <WithTooltip
                                   delayDuration={200}
-                                  side="right"
-                                  display={<div>{item.name}</div>}
+                                  side="top"
+                                  display={
+                                    <div className="bg-muted text-muted-foreground rounded-md px-3 py-2 text-sm shadow-md">
+                                      {item.name}
+                                    </div>
+                                  }
                                   trigger={getDataListComponent(
                                     contentType,
                                     item
