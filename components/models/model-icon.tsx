@@ -56,7 +56,10 @@ export const ModelIcon: FC<ModelIconProps> = ({
         />
       )
     case "claude-2.1":
+    case "claude-3-sonnet-20240229":
     case "claude-instant-1.2":
+    case "claude-3-opus-20240229":
+    case "claude-3-haiku-20240307":
       return (
         <AnthropicSVG
           className={cn(

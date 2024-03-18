@@ -4,7 +4,7 @@ import { toast } from "sonner"
 
 const toastOptions = {
   unstyled: true,
-  className: "bg-danger text-white font-medium text-lg p-5 rounded-lg",
+  className: "bg-danger text-white font-medium text-lg p-10 m-10 rounded-lg",
   duration: 5000
 }
 
